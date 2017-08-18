@@ -19,85 +19,97 @@ var triviaQuestions = {
 	},
 };
 var firstQuestion = triviaQuestions.firstQ.Q	
-var firstQuestionAnswer = triviaQuestions.firstQ.Answer[2]
+var firstQAnswer = triviaQuestions.firstQ.Answer
 
 var secondQuestion = triviaQuestions.secondQ.Q
-var secondQuestionAnswer = triviaQuestions.secondQ.Answer[3]
+var secondQAnswer = triviaQuestions.secondQ.Answer[3]
 
 var thirdQuestion = triviaQuestions.thirdQ.Q
-var thirdQuestionAnswer = triviaQuestions.thirdQ.Answer[0]
+var thirdQAnswer = triviaQuestions.thirdQ.Answer[0]
 
 var fourthQuestion = triviaQuestions.fourthQ.Q
-var fourthQuestionAnswer = triviaQuestions.fourthQ.Answer[1]
+var fourthQAnswer = triviaQuestions.fourthQ.Answer[1]
 
 var triviaQArray = [triviaQuestions.firstQ.Q, triviaQuestions.secondQ.Q, triviaQuestions.thirdQ.Q];
 
 var randomTriviaQuestion = triviaQArray[Math.floor(Math.random() * triviaQArray.length)];
-
+var questionId = $('#question').text()
 // Change question function
-function changeQuestion() {
+function hideQuestion() {
 	$('#answer-buttons').hide()
-	$('#questionanswer').append('<div class=jumbotron>Works!</div>')
 }
 
-// ON START CLICK, HIDE START BUTTON, MAKE FIRST QUESTION, MAKE 4 GUESSES
-function startButton() {
-	$('#start').click(function() {
-	$('#question').html(randomTriviaQuestion);
-	$('#start').hide();
-	// make answers
+function firstAnswerButtons() {
 	for (var i = 1; i < 5; i++) {
-		var buttons = '<button id ="button" type=button class="btn btn-default btn-lg btn-block"></button>';
-		$('#answer-buttons').append(buttons);
+		var buttons = '<button type=button class="btn btn-default btn-lg btn-block"></button>';
+		$('#answers' + i).append(buttons);
 	}
-
 	var firstButton = $('#answer-buttons').children().eq(0).children().eq(0);
 	var secondButton = $('#answer-buttons').children().eq(1).children().eq(0);
 	var thirdButton = $('#answer-buttons').children().eq(2).children().eq(0);
 	var fourthButton = $('#answer-buttons').children().eq(3).children().eq(0);
 
-	var questionId = $('#question').text()
-
-	// Answer Button Functions //////////////////////////////////
-	if (questionId == thirdQuestion) {
-	function answerInput() {$('#answer-buttons button').each(function (i) {
-		$(this).html(triviaQuestions.firstQ.Answer + '[' + i + ']')
-		console.log('first answers created')
-	})
-	}
-	answerInput()
-	$(document).on("click", "#button", answerInput);
+	console.log(firstButton)
+	console.log(firstQAnswer[0])
+	$(firstButton).text(firstQAnswer[0]).attr("id", "button1")
 	console.log(firstButton.text())
-	
-	$(document).on("click", "#button", $(firstButton).click(function() {
-		console.log('first button clicked')
-	}))
+	$(secondButton).text(firstQAnswer[1]).attr("id", "button2")
+	$(thirdButton).text(firstQAnswer[2]).attr("id", "button3")
+	$(fourthButton).text(firstQAnswer[3]).attr("id", "button4")
 
-	// if ($(secondButton).click() || $(thirdButton).click() || $(fourthButton).click()) {
-	// 	console.log('wrong button clicked')
-
-	} else if (questionId == fourthQuestion) {
-	$('#answer-buttons button').each(function (i) {
-		$(this).html(triviaQuestions.secondQ.Answer + i)
-		console.log('second answers created')
+	$('#button3').click(function() {
+		console.log('first button clicked');
+		hideQuestion();
+		$('#questionanswer').append('<div class=jumbotron>Works!</div>')
+		setTimeout(secondAnswerButtons, 1000 * 3);
 	})
-	} else if (questionId == firstQuestion) {
-	$('#answer-buttons button').each(function (i) {
-		$(this).html(triviaQuestions.thirdQ.Answer + i)
-		console.log('third answers created')
+	$('#button1, #button2, #button4').click(function() {
+		console.log('first wrong button clicked')
+		hideQuestion();
 	})
-	} else if (questionId == secondQuestion) {
-	$('#answer-buttons button').each(function (i) {
-		$(this).html(triviaQuestions.fourthQ.Answer + i)
-		console.log('fourth answers created')
-	})
-	}
 
-
-})
 }
-$(document).on("click", "#start", startButton)
-console.log(buttons)
+
+function secondAnswerButtons() {
+	$('#questionanswer').empty();
+	$('#question').html(firstQuestion);
+		for (var i = 1; i < 5; i++) {
+		var buttons = '<button type=button class="btn btn-default btn-lg btn-block"></button>';
+		$('#answers' + i).append(buttons);
+	}
+	var firstButton = $('#answer-buttons').children().eq(0).children().eq(0);
+	var secondButton = $('#answer-buttons').children().eq(1).children().eq(0);
+	var thirdButton = $('#answer-buttons').children().eq(2).children().eq(0);
+	var fourthButton = $('#answer-buttons').children().eq(3).children().eq(0);
+
+	console.log(firstButton)
+	console.log(secondQAnswer[0])
+	$(firstButton).text(secondQAnswer[0]).attr("id", "button1")
+	console.log(secondButton.text())
+	$(secondButton).text(secondQAnswer[1]).attr("id", "button2")
+	$(thirdButton).text(secondQAnswer[2]).attr("id", "button3")
+	$(fourthButton).text(secondQAnswer[3]).attr("id", "button4")
+
+	$('#button4').click(function() {
+		console.log('first button clicked');
+		hideQuestion();
+		$('#questionanswer').append('<div class=jumbotron>Works!</div>')
+		setTimeout(secondAnswerButtons, 1000 * 3);
+	})
+	$('#button1, #button2, #button3').click(function() {
+		console.log('first wrong button clicked')
+		hideQuestion();
+	})
+}
+
+// ON START CLICK, HIDE START BUTTON, MAKE FIRST QUESTION, MAKE 4 GUESSES
+$('#start').click(function() {
+	$('#question').html(firstQuestion);
+	$('#start').hide();
+	firstAnswerButtons()
+})
+
+
 
 
 	// firstButton.click(function () {
