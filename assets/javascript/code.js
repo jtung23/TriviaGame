@@ -34,9 +34,32 @@ var triviaQArray = [triviaQuestions.firstQ.Q, triviaQuestions.secondQ.Q, triviaQ
 
 var randomTriviaQuestion = triviaQArray[Math.floor(Math.random() * triviaQArray.length)];
 var questionId = $('#question').text()
+var time = 30
+function setTimer () {
+	$('#timer').html("Time left:" + time)
+	setInterval(startQuestionTimer, 1000)
+	setTimeout(startQuestionTimer, 1000)
+}
+
 // Change question function
+function startQuestionTimer() {
+	time--
+	setTimeout(startQuestionTimer, 1000)
+	$('#timer').html(time)
+	console.log(time)
+
+	if (time === 25) {
+		clearInterval()
+		clearTimeout()
+		console.log('out of time')
+	}
+
+}
+
+
+
 function hideQuestion() {
-	$('#answer-buttons').hide()
+	$('#answer-buttons').empty()
 }
 
 function firstAnswerButtons() {
@@ -107,6 +130,7 @@ $('#start').click(function() {
 	$('#question').html(firstQuestion);
 	$('#start').hide();
 	firstAnswerButtons()
+	startQuestionTimer()
 })
 
 
