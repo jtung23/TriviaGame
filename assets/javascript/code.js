@@ -66,7 +66,7 @@ function startQuestionTimer() {
 	$('#timer').html("Time left: " + time)
 	console.log(time)
 
-	if (time === 23) {
+	if (time === 0) {
 		qArrayNum++
 		if (qArrayNum == triviaQArray.length) {
 			console.log('done')
@@ -80,7 +80,9 @@ function startQuestionTimer() {
 }
 
 // //////////////////////////////////////////////////////////////////////////
-
+function removeClick() {
+	$('.answerbtn').off();
+}
 
 
 function hideQuestion() {
@@ -91,6 +93,7 @@ function preAnswersCorrect() {
 	qArrayNum++;
 	score++;
 	console.log(qArrayNum)
+	removeClick()
 	generateButtons()
 }
 
@@ -98,6 +101,7 @@ function preAnswersWrong() {
 	qArrayNum++;
 	badscore++;
 	console.log(qArrayNum)
+	removeClick()
 	generateButtons()
 }
 function generateButtons() {
@@ -133,11 +137,11 @@ function generateButtons() {
 	$(button3).text(secondQAnswer[2])
 	$(button4).text(secondQAnswer[3])
 
-	$('#button4').click(function() {
+	$('#answer4').click(function() {
 		console.log('first button clicked');
 		preAnswersCorrect();
 	})
-	$('#button1, #button2, #button3').click(function() {
+	$('#answer1, #answer2, #answer3').click(function() {
 		console.log('first wrong button clicked')
 		preAnswersWrong()
 	})
@@ -152,12 +156,11 @@ function generateButtons() {
 	$(button3).text(thirdQAnswer[2])
 	$(button4).text(thirdQAnswer[3])
 
-	$('#button1').click(function() {
-		console.log('first button clicked');
-		$('.answerbtn, #question').empty()
+	$('#answer1').click(function() {
+		console.log('first answer clicked');
 		preAnswersCorrect();
 	})
-	$('#button4, #button2, #button3').click(function() {
+	$('#answer4, #answer2, #answer3').click(function() {
 		console.log('first wrong button clicked')
 		preAnswersWrong();
 	})
@@ -169,20 +172,34 @@ function generateButtons() {
 	$(button3).text(fourthQAnswer[2])
 	$(button4).text(fourthQAnswer[3])
 
-	$('#button2').click(function() {
-		console.log('first button clicked');
+	$('#answer2').click(function() {
+		console.log('first answer clicked');
 		preAnswersCorrect();
 	})
-	$('#button4, #button1, #button3').click(function() {
+	$('#answer4, #answer1, #answer3').click(function() {
 		console.log('first wrong button clicked')
 		preAnswersWrong();
 	})
 	}
 	else if (qArrayNum == 4) {
-		console.log('game over')
+		gameOver()
 	} 
 }
 
+function gameOver() {
+	var QAarea = $('#QAarea')
+	QAarea.empty();
+	clearInterval(thirtyIntervalId)
+	$('#timer').empty();
+	QAarea.html('<p>');
+	QAarea.append('<h3>Score:');
+	QAarea.append('<h3>' + score + ' / ' + '4');
+	QAarea.css({
+
+	})
+	$('body').css('background-image', "url(assets/images/gameover.jpg)");
+
+}
 // ON START CLICK, HIDE START BUTTON, MAKE FIRST QUESTION, MAKE 4 GUESSES
 $('#start').click(function() {
 	$('#start').hide();
@@ -190,54 +207,4 @@ $('#start').click(function() {
 	generateButtons()
 })
 
-
-
-
-	// firstButton.click(function () {
-	// 	console.log('hey i was clicked')
-	// 	console.log(firstButton.text())
-	// 	if (questionId == thirdQuestion) {
-	// 		console.log("correct")
-	// 	} else {
-	// 		console.log(false)
-			
-	// 	}
-	// })
-
-	// secondButton.click(function () {
-	// 	if (questionId == fourthQuestion) {
-	// 	console.log('correct')
-	// } else {
-	// 	console.log('no')
-	// }
-	// })
-
-	// thirdButton.click(function () {
-	// 	if (questionId == firstQuestion) {
-	// 		console.log('correct')
-	// 	} else {
-	// 		console.log('no')
-	// 	}
-	// })
-
-	// fourthButton.click(function () {
-	// 	if (questionId == secondQuestion) {
-	// 		console.log('correct')
-	// 	} else {
-	// 		console.log('no')
-	// 	}
-	// })
-
-	// /////////////////////////////////////////////////////
-
-
-	// firstButton.text(triviaQuestions.firstQ.Answer[0]);
-	// secondButton.text(triviaQuestions.firstQ.Answer[1]);
-	// thirdButton.text(triviaQuestions.firstQ.Answer[2]);
-	// fourthButton.text(triviaQuestions.firstQ.Answer[3]);
-
-
-// FIRST QUESTION ///////////////////// changed the DOM. why can click function work on id
-// JQUERY EVENT DELEGATION PUT CLOSE TO END
-// use each() to delegate based on array. triviaQuestions.firstQ.Answer[i]
 })

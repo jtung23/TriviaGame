@@ -1,3 +1,47 @@
+@font-face {
+	font-family: sausageFont;
+	src: url(sausage.ttf);
+}
+
+@font-face {
+	font-family: vtks;
+	src: url(vtks.ttf);
+}
+
 h1 {
 	text-align: center;
+	background-image: url(../images/gradient.jpg);
+	background-size: cover;
+	font-family: sausageFont;
+	font-weight: bolder;
+	font-size: 40pt;
+}
+body {
+	background-image: url(../images/meat-bkgrd.jpg);
+	background-size: cover;
+}
+
+.btn {
+	font-family: vtks;
+	font-weight: bolder;
+	font-size: 24pt;
+}
+
+#timer {
+	text-align: center;
+	background-image: url(../images/gradient.jpg);
+	background-size: contain;
+	font-size: 18pt;
+	font-weight: bold;
+}
+
+.QAarea {
+	width: 65%;
+}
+
+h3 {
+	text-align: center;
+	font-size: 56pt;
+	font-weight: bold;
+	font-family: 'Bree Serif', serif;
 }
