@@ -25,13 +25,13 @@ var firstQuestion = triviaQuestions.firstQ.Q
 var firstQAnswer = triviaQuestions.firstQ.Answer
 
 var secondQuestion = triviaQuestions.secondQ.Q
-var secondQAnswer = triviaQuestions.secondQ.Answer[3]
+var secondQAnswer = triviaQuestions.secondQ.Answer
 
 var thirdQuestion = triviaQuestions.thirdQ.Q
-var thirdQAnswer = triviaQuestions.thirdQ.Answer[0]
+var thirdQAnswer = triviaQuestions.thirdQ.Answer
 
 var fourthQuestion = triviaQuestions.fourthQ.Q
-var fourthQAnswer = triviaQuestions.fourthQ.Answer[1]
+var fourthQAnswer = triviaQuestions.fourthQ.Answer
 
 var button1 = $('#answer1')
 var button2 = $('#answer2')
@@ -87,39 +87,46 @@ function hideQuestion() {
 	$('#answer-buttons').hide()
 }
 
+function preAnswersCorrect() {
+	qArrayNum++;
+	score++;
+	console.log(qArrayNum)
+	generateButtons()
+}
+
+function preAnswersWrong() {
+	qArrayNum++;
+	badscore++;
+	console.log(qArrayNum)
+	generateButtons()
+}
 function generateButtons() {
 	console.log(qArrayNum)
 	$('#answer-buttons').show();
-	startQuestionTimer()
+	resetTimer();
+	startQuestionTimer();
 
-	// Question 1///////////////////////////
-	if (qArrayNum == 0) {
+	// Question 0///////////////////////////
+	if (qArrayNum === 0) {
 	$('#question').html(firstQuestion);
 	$(button1).text(firstQAnswer[0])
 	$(button2).text(firstQAnswer[1])
 	$(button3).text(firstQAnswer[2])
 	$(button4).text(firstQAnswer[3])
 
-	$(button3).click(function() {
+	$('#answer3').click(function() {
 		console.log('first button clicked');
-		qArrayNum++
-		score++
-		return qArrayNum++
-		generateButtons();
+		preAnswersCorrect();
 	})
 	$("#answer1, #answer2, #answer4").click(function() {
 		console.log('first wrong button clicked')
-		qArrayNum++
-		badscore++
-		return qArrayNum++
-		console.log(qArrayNum);
-		generateButtons()
+		preAnswersWrong();
 	})	
 	}
 
 // Question 2///////////////////////////
 
-	 else if (qArrayNum == 1) {
+	else if (qArrayNum === 1) {
 	$('#question').html(secondQuestion);
 	$(button1).text(secondQAnswer[0])
 	$(button2).text(secondQAnswer[1])
@@ -128,20 +135,17 @@ function generateButtons() {
 
 	$('#button4').click(function() {
 		console.log('first button clicked');
-		qArrayNum++
-		score++
-		return qArrayNum++
-		generateButtons();
+		preAnswersCorrect();
 	})
 	$('#button1, #button2, #button3').click(function() {
 		console.log('first wrong button clicked')
-		hideQuestion();
+		preAnswersWrong()
 	})
 	} 
 
 // Question 3///////////////////////////
 
-	else if (qArrayNum == 2) {
+	else if (qArrayNum === 2) {
 		$('#question').html(thirdQuestion);
 	$(button1).text(thirdQAnswer[0])
 	$(button2).text(thirdQAnswer[1])
@@ -150,17 +154,15 @@ function generateButtons() {
 
 	$('#button1').click(function() {
 		console.log('first button clicked');
-		qArrayNum++
-		score++
-		return qArrayNum++
-		generateButtons();
+		$('.answerbtn, #question').empty()
+		preAnswersCorrect();
 	})
 	$('#button4, #button2, #button3').click(function() {
 		console.log('first wrong button clicked')
-		hideQuestion();
+		preAnswersWrong();
 	})
 	}
-	else if (qArrayNum == 3) {
+	else if (qArrayNum === 3) {
 	$('#question').html(fourthQuestion);
 	$(button1).text(fourthQAnswer[0])
 	$(button2).text(fourthQAnswer[1])
@@ -169,17 +171,14 @@ function generateButtons() {
 
 	$('#button2').click(function() {
 		console.log('first button clicked');
-		qArrayNum++
-		score++
-		return qArrayNum++
-		generateButtons();
+		preAnswersCorrect();
 	})
 	$('#button4, #button1, #button3').click(function() {
 		console.log('first wrong button clicked')
-		hideQuestion();
+		preAnswersWrong();
 	})
 	}
-	else {
+	else if (qArrayNum == 4) {
 		console.log('game over')
 	} 
 }
